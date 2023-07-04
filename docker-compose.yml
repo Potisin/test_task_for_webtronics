@@ -1,0 +1,24 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres:13.3
+    container_name: webtronics_pg
+    env_file: .env.docker
+
+
+
+  app:
+    build:
+      context: .
+    env_file: .env.docker
+    container_name: webtronics_app
+    command: ['/test_task_for_webtronics/docker/app.sh']
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    volumes:
+      - ./alembic:/test_task_for_webtronics/alembic
+
+
