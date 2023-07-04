@@ -20,5 +20,6 @@ services:
       - db
     volumes:
       - ./alembic:/test_task_for_webtronics/alembic
+      - ./src:/test_task_for_webtronics/src
 
 
