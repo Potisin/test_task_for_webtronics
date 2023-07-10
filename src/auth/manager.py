@@ -6,7 +6,7 @@ from fastapi_users import BaseUserManager, IntegerIDMixin
 from fastapi_users import exceptions, models, schemas
 
 from auth.models import User
-from auth.utils import get_user_db
+from auth.utils import get_user_db, get_clearbit_data
 from config import JWT_SECRET
 
 SECRET = JWT_SECRET
@@ -51,6 +51,12 @@ class UserManager(IntegerIDMixin, BaseUserManager[User, int]):
         )
         password = user_dict.pop("password")
         user_dict["hashed_password"] = self.password_helper.hash(password)
+        clearbit_user_data = await get_clearbit_data(user_create.email)
+        if clearbit_user_data:
+            user_dict['first_name'] = clearbit_user_data.get('name').get('givenName')
+            user_dict['last_name'] = clearbit_user_data.get('name').get('familyName')
+            user_dict['country'] = clearbit_user_data.get('geo').get('country')
+            user_dict['city'] = clearbit_user_data.get('geo').get('city')
 
         created_user = await self.user_db.create(user_dict)
 

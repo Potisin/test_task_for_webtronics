@@ -9,7 +9,13 @@ from database import Base
 
 class User(SQLAlchemyBaseUserTable[int], Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    username: Mapped[str] = mapped_column(String(30), unique=True, nullable=False)
+    first_name: Mapped[str] = mapped_column(String, nullable=True)
+    last_name: Mapped[str] = mapped_column(String, nullable=True)
+    country: Mapped[str] = mapped_column(String, nullable=True)
+    city: Mapped[str] = mapped_column(String, nullable=True)
     posts: Mapped[List["Post"]] = relationship("Post", back_populates="user",
                                                cascade="save-update, delete, delete-orphan")
-
+    likes: Mapped[List["Like"]] = relationship("Like", back_populates="user",
+                                               cascade="save-update, delete, delete-orphan")
+    dislikes: Mapped[List["Like"]] = relationship("Dislike", back_populates="user",
+                                                  cascade="save-update, delete, delete-orphan")

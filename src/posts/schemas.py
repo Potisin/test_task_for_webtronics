@@ -15,9 +15,6 @@ class PostCreate(BaseModel):
 class PostRead(PostCreate):
     id: int
     created_at: datetime
+    likes_count: int
+    dislikes_count: int
     user: PostAuthor
-
-
-
-
-

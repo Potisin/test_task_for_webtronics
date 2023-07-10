@@ -1,14 +1,11 @@
 import logging
 
 from fastapi import FastAPI, Depends
-from fastapi_users import FastAPIUsers
 
-from auth.base_config import auth_backend, current_user
-from auth.manager import get_user_manager
+from auth.base_config import current_user
 from auth.models import User
-from auth.schemas import UserRead, UserCreate
-from posts.router import router as posts_router
 from auth.router import router as auth_router
+from posts.router import router as posts_router
 
 logging.basicConfig(level=logging.DEBUG)
 

@@ -5,24 +5,27 @@ from pydantic import BaseModel
 
 
 class CustomBaseUserCreate(schemas.BaseUserCreate):
-    username: str
     password: Optional[str] = None
 
     class Config:
         orm_mode = True
 
 
-class UserCreate(CustomBaseUserCreate):
+class UserInput(CustomBaseUserCreate):
     password: str
 
 
 class UserRead(CustomBaseUserCreate):
     id: int
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+    country: Optional[str] = None
+    city: Optional[str] = None
 
 
 class PostAuthor(BaseModel):
     id: int
-    username: str
+    email: str
 
     class Config:
         orm_mode = True
