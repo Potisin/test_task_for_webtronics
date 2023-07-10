@@ -1,24 +1,28 @@
 from typing import Optional
 
 from fastapi_users import schemas
+from pydantic import BaseModel
 
 
-class UserRead(schemas.BaseUser[int]):
-    id: int
+class CustomBaseUserCreate(schemas.BaseUserCreate):
     username: str
-    email: str
-    is_active: bool = True
-    is_superuser: bool = False
-    is_verified: bool = False
+    password: Optional[str] = None
 
     class Config:
         orm_mode = True
 
 
-class UserCreate(schemas.BaseUserCreate):
-    username: str
-    email: str
+class UserCreate(CustomBaseUserCreate):
     password: str
-    is_active: Optional[bool] = True
-    is_superuser: Optional[bool] = False
-    is_verified: Optional[bool] = False
+
+
+class UserRead(CustomBaseUserCreate):
+    id: int
+
+
+class PostAuthor(BaseModel):
+    id: int
+    username: str
+
+    class Config:
+        orm_mode = True
