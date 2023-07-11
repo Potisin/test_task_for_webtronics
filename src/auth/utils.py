@@ -12,6 +12,7 @@ from database import get_async_session
 async def get_user_db(session: AsyncSession = Depends(get_async_session)):
     yield SQLAlchemyUserDatabase(session, User)
 
+
 async def get_clearbit_data(email: EmailStr):
     url = f"https://person.clearbit.com/v1/people/email/{email}"
 

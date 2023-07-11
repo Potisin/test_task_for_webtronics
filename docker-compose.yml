@@ -4,14 +4,14 @@ services:
   db:
     image: postgres:13.3
     container_name: webtronics_pg
-    env_file: .env.docker
+    env_file: .env
 
 
 
   app:
     build:
       context: .
-    env_file: .env.docker
+    env_file: .env
     container_name: webtronics_app
     command: ['/test_task_for_webtronics/docker/app.sh']
     ports:
